@@ -1,10 +1,10 @@
 import requests
-import logging
 from functools import partial
 import pyproj
 from shapely.ops import transform
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
+import base64
 
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
@@ -22,15 +22,9 @@ def geodesic_point_buffer(lat, lon, km):
 
 
 def check(lons_lats_vect):
-    # test purpose
-    # print(lons_lats_vect)
-    point = Point(5.9648594, 52.2086425)
-    # polygon = Polygon(lons_lats_vect)
-    # print(polygon.contains(point))
-
     polygon = Polygon(lons_lats_vect)  # create polygon
 
-    url = "https://adsbexchange-com1.p.rapidapi.com/v2/lat/52.2086425/lon/5.9648594/dist/3/"
+    url = "https://adsbexchange-com1.p.rapidapi.com/v2/lat/52.2086425/lon/5.9648594/dist/10/"
     # url = "https://airlabs.co/api/v9/flights?api_key=46c11282-49fb-43e5-8741-554dd3a768ad";
 
     headers = {
@@ -44,21 +38,28 @@ def check(lons_lats_vect):
     for l in result['ac']:
         point = Point(l['lon'], l['lat'])  # create point
         polygonCheck = point.within(polygon)  # check if a point is in the polygon
-        print(l)
-        if polygonCheck:
-            payload = {
-                "inPolygon": polygonCheck,
-                "lat": l['lat'],
-                "lon": l['lon'],
-                "flight": l['flight']
-            }
 
-            requests.post('http://127.0.0.1:8000/api/flight-data', data=payload)
+        if polygonCheck:
+
+            with open("images/small.jpg", "rb") as img_file:
+                data_uri = base64.b64encode(img_file.read())
+
+            try:
+                payload = {
+                    "inPolygon": polygonCheck,
+                    "lat": l['lat'],
+                    "lon": l['lon'],
+                    "flight": l['flight'],
+                    "image": data_uri
+                }
+                requests.post('http://127.0.0.1:8000/api/flight-data', data=payload)
+            except:
+                pass
         else:
             print("No flight data available")
 
 
 # Runs scripts
 if __name__ == '__main__':
-    b = geodesic_point_buffer(52.2086425, 5.9648594, 100.0)
+    b = geodesic_point_buffer(52.2086425, 5.9648594, 50.0)
     check(b)
