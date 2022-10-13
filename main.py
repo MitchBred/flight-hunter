@@ -25,7 +25,6 @@ def check(lons_lats_vect):
     polygon = Polygon(lons_lats_vect)  # create polygon
 
     url = "https://adsbexchange-com1.p.rapidapi.com/v2/lat/52.2086425/lon/5.9648594/dist/10/"
-    # url = "https://airlabs.co/api/v9/flights?api_key=46c11282-49fb-43e5-8741-554dd3a768ad";
 
     headers = {
         "X-RapidAPI-Key": "343a3909c7mshdd02c4b847c51e0p1c1123jsnf35b8149da43",
@@ -52,7 +51,7 @@ def check(lons_lats_vect):
                     "flight": l['flight'],
                     "image": data_uri
                 }
-                requests.post('http://127.0.0.1:8000/api/flight-data', data=payload)
+                requests.post('https://flights.mitchellbreden.nl/api/flight-data', data=payload)
             except:
                 pass
         else:
