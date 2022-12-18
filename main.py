@@ -10,6 +10,7 @@ from picamera2 import Picamera2
 picam2 = Picamera2()
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
+
 def geodesic_point_buffer(lat, lon, km):
     # Azimuthal equidistant projection
     aeqd_proj = '+proj=aeqd +lat_0={lat} +lon_0={lon} +x_0=0 +y_0=0'
@@ -42,7 +43,7 @@ def check(lons_lats_vect):
 
         if polygonCheck:
 
-            picam2.start_and_capture_file("images/flight.jpg") # capture
+            picam2.start_and_capture_file("images/flight.jpg")  # capture
 
             with open("images/small.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
