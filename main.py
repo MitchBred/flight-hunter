@@ -43,7 +43,7 @@ def check(lons_lats_vect):
 
         if polygonCheck:
 
-            picam2.start_and_capture_file("images/flight.jpg")  # capture
+            picam2.capture_file("images/flight.jpg")  # capture
 
             with open("images/flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
