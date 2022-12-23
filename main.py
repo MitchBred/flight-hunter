@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import requests
 from functools import partial
 import pyproj
@@ -5,9 +7,17 @@ from shapely.ops import transform
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 import base64
-from picamera2 import Picamera2
+# from picamera2 import Picamera2, Preview
+import time
+import os
+script_dir = os.path.dirname(os.path.realpath(__file__))
+os.chdir(script_dir)
 
-picam2 = Picamera2()
+# picam2 = Picamera2()
+# config = picam2.create_preview_configuration()
+# picam2.configure(config)
+# picam2.start_preview(Preview.NULL)
+
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
 
@@ -26,7 +36,7 @@ def geodesic_point_buffer(lat, lon, km):
 def check(lons_lats_vect):
     polygon = Polygon(lons_lats_vect)  # create polygon
 
-    url = "https://adsbexchange-com1.p.rapidapi.com/v2/lat/52.2086425/lon/5.9648594/dist/20/"
+    url = "https://adsbexchange-com1.p.rapidapi.com/v2/lat/52.2086425/lon/5.9648594/dist/10/"
 
     headers = {
         "X-RapidAPI-Key": "343a3909c7mshdd02c4b847c51e0p1c1123jsnf35b8149da43",
@@ -42,8 +52,10 @@ def check(lons_lats_vect):
         polygonLower = str(polygonCheck).lower()
 
         if polygonCheck:
-
-            picam2.start_and_capture_file("images/flight.jpg")  # capture
+            picam2.start()
+            time.sleep(2)
+            picam2.capture_file("images/flight.jpg")
+            picam2.stop()
 
             with open("images/flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
