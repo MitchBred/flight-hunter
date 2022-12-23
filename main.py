@@ -7,16 +7,16 @@ from shapely.ops import transform
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 import base64
-# from picamera2 import Picamera2, Preview
+from picamera2 import Picamera2, Preview
 import time
 import os
 script_dir = os.path.dirname(os.path.realpath(__file__))
 os.chdir(script_dir)
 
-# picam2 = Picamera2()
-# config = picam2.create_preview_configuration()
-# picam2.configure(config)
-# picam2.start_preview(Preview.NULL)
+picam2 = Picamera2()
+config = picam2.create_preview_configuration()
+picam2.configure(config)
+picam2.start_preview(Preview.NULL)
 
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
