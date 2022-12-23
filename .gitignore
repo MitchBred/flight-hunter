@@ -1,3 +1,6 @@
 /.idea
 .idea/
 .DS_Store
+.env
+images/flight.jpg
+__pychache__/
