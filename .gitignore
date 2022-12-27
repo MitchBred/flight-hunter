@@ -2,5 +2,5 @@
 .idea/
 .DS_Store
 .env
-images/flight.jpg
+camera/images/flight.jpg
 __pychache__/

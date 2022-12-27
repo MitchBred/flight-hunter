@@ -1,22 +1,19 @@
-#!/usr/bin/python3
-
 import requests
+from camera import camera
+from calculations import kilometerToNauticalMile
 from functools import partial
 import pyproj
 from shapely.ops import transform
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 import base64
-from picamera2 import Picamera2, Preview
-import time
 import os
-script_dir = os.path.dirname(os.path.realpath(__file__))
-os.chdir(script_dir)
+from dotenv import load_dotenv, find_dotenv
 
-picam2 = Picamera2()
-config = picam2.create_preview_configuration()
-picam2.configure(config)
-picam2.start_preview(Preview.NULL)
+load_dotenv(find_dotenv())  # load env
+
+script_dir = os.path.dirname(os.path.realpath(__file__))  # raspberry pi
+os.chdir(script_dir)
 
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
@@ -35,48 +32,42 @@ def geodesic_point_buffer(lat, lon, km):
 
 def check(lons_lats_vect):
     polygon = Polygon(lons_lats_vect)  # create polygon
-
-    url = "https://adsbexchange-com1.p.rapidapi.com/v2/lat/52.2086425/lon/5.9648594/dist/10/"
-
+    url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometerToNauticalMile()}/"
     headers = {
-        "X-RapidAPI-Key": "343a3909c7mshdd02c4b847c51e0p1c1123jsnf35b8149da43",
-        "X-RapidAPI-Host": "adsbexchange-com1.p.rapidapi.com"
+        "X-RapidAPI-Key": os.getenv('X-RAPID-API-KEY'),
+        "X-RapidAPI-Host": os.getenv('X-RAPID-API-HOST'),
     }
+    response = requests.request("GET", url, headers=headers).json()
 
-    response = requests.request("GET", url, headers=headers)
-    result = response.json()
-
-    for l in result['ac']:
-        point = Point(l['lon'], l['lat'])  # create point
+    for list in response['ac']:
+        point = Point(list['lon'], list['lat'])  # create point
         polygonCheck = point.within(polygon)  # check if a point is in the polygon
         polygonLower = str(polygonCheck).lower()
 
         if polygonCheck:
-            picam2.start()
-            time.sleep(2)
-            picam2.capture_file("images/flight.jpg")
-            picam2.stop()
+            camera.capture()
 
-            with open("images/flight.jpg", "rb") as img_file:
+            with open("camera/images/flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
 
             try:
-                print('flight:', l['flight'])
+                print('flight:', list['flight'])
                 payload = {
                     "in_polygon": polygonLower,
-                    "lat": l['lat'],
-                    "lon": l['lon'],
-                    "flight": l['flight'],
+                    "lat": list['lat'],
+                    "lon": list['lon'],
+                    "flight": list['flight'],
                     "image": data_uri
                 }
                 requests.post('https://huis.mitchellbreden.nl/api/flight-data', data=payload)
             except:
                 pass
         else:
-            print("No flight data available")
+            print("No flights in area")
 
 
 # Runs scripts
 if __name__ == '__main__':
-    b = geodesic_point_buffer(52.2086425, 5.9648594, 150.0)
+    # todo import km from os env
+    b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), 5)
     check(b)
