@@ -1,4 +1,4 @@
-from camera import camera
+# from camera import camera
 import requests
 from calculations import kilometerToNauticalMile
 from functools import partial
@@ -45,7 +45,7 @@ def check(lons_lats_vect):
         polygonLower = str(polygonCheck).lower()
 
         if polygonCheck:
-            camera.capture()
+            # camera.capture()
 
             with open("images/flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
