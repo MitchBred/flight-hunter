@@ -1,4 +1,4 @@
-from camera import camera
+# from camera import camera
 import requests
 from calculations import kilometerToNauticalMile
 from functools import partial
@@ -16,7 +16,6 @@ load_dotenv(find_dotenv())  # load env
 
 script_dir = os.path.dirname(os.path.realpath(__file__))  # raspberry pi
 os.chdir(script_dir)
-os.chmod('images', 755)
 
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
@@ -49,7 +48,7 @@ def check(lons_lats_vect):
         print(os.path.isfile(file_name))
 
         if polygonCheck:
-            camera.capture()
+            # camera.capture()
 
             with open("images/flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
