@@ -14,9 +14,6 @@ from datetime import datetime
 
 load_dotenv(find_dotenv())  # load env
 
-script_dir = os.path.dirname(os.path.realpath(__file__))  # raspberry pi
-os.chdir(script_dir)
-
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
 
