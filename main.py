@@ -1,5 +1,7 @@
+import datetime
+
 import requests
-from camera import camera
+# from camera import camera
 from calculations import kilometerToNauticalMile
 from functools import partial
 import pyproj
@@ -9,6 +11,8 @@ from shapely.geometry.polygon import Polygon
 import base64
 import os
 from dotenv import load_dotenv, find_dotenv
+import pywhatkit
+import datetime
 
 load_dotenv(find_dotenv())  # load env
 
@@ -21,10 +25,7 @@ proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 def geodesic_point_buffer(lat, lon, km):
     # Azimuthal equidistant projection
     aeqd_proj = '+proj=aeqd +lat_0={lat} +lon_0={lon} +x_0=0 +y_0=0'
-    project = partial(
-        pyproj.transform,
-        pyproj.Proj(aeqd_proj.format(lat=lat, lon=lon)),
-        proj_wgs84)
+    project = partial(pyproj.transform, pyproj.Proj(aeqd_proj.format(lat=lat, lon=lon)), proj_wgs84)
     buf = Point(0, 0).buffer(km * 1000)  # distance in metres
 
     return transform(project, buf).exterior.coords[:]
@@ -32,6 +33,7 @@ def geodesic_point_buffer(lat, lon, km):
 
 def check(lons_lats_vect):
     polygon = Polygon(lons_lats_vect)  # create polygon
+
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometerToNauticalMile()}/"
     headers = {
         "X-RapidAPI-Key": os.getenv('X-RAPID-API-KEY'),
@@ -45,9 +47,9 @@ def check(lons_lats_vect):
         polygonLower = str(polygonCheck).lower()
 
         if polygonCheck:
-            camera.capture()
+            # camera.capture()
 
-            with open("camera/images/flight.jpg", "rb") as img_file:
+            with open("images/flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
 
             try:
@@ -68,6 +70,10 @@ def check(lons_lats_vect):
 
 # Runs scripts
 if __name__ == '__main__':
+    # date = datetime.datetime.now()
+    # print(date.strftime("%H"))
     # todo import km from os env
-    b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), 5)
+    b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), 20)
+    # print(b)
     check(b)
+    # pywhatkit.sendwhatmsg("+31636523113", "Message2", date.strftime("%H"), date.strftime("%M"))
