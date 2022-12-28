@@ -45,6 +45,9 @@ def check(lons_lats_vect):
         polygonCheck = point.within(polygon)  # check if a point is in the polygon
         polygonLower = str(polygonCheck).lower()
 
+        file_name = r'/srv/flights.mitchellbreden.nl/images/flight.jpg'
+        print(os.path.isfile(file_name))
+
         if polygonCheck:
             camera.capture()
 
