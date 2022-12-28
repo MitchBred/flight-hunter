@@ -1,7 +1,5 @@
-import datetime
-
+from camera import camera
 import requests
-# from camera import camera
 from calculations import kilometerToNauticalMile
 from functools import partial
 import pyproj
@@ -11,8 +9,8 @@ from shapely.geometry.polygon import Polygon
 import base64
 import os
 from dotenv import load_dotenv, find_dotenv
-import pywhatkit
-import datetime
+# import pywhatkit
+from datetime import datetime
 
 load_dotenv(find_dotenv())  # load env
 
@@ -47,7 +45,7 @@ def check(lons_lats_vect):
         polygonLower = str(polygonCheck).lower()
 
         if polygonCheck:
-            # camera.capture()
+            camera.capture()
 
             with open("images/flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
@@ -70,10 +68,8 @@ def check(lons_lats_vect):
 
 # Runs scripts
 if __name__ == '__main__':
-    # date = datetime.datetime.now()
-    # print(date.strftime("%H"))
-    # todo import km from os env
-    b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), 20)
-    # print(b)
+    b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), int(os.getenv('KM')))
     check(b)
-    # pywhatkit.sendwhatmsg("+31636523113", "Message2", date.strftime("%H"), date.strftime("%M"))
+    # todo import send whatsapp message as subprocess
+    # a = datetime.now()
+    # pywhatkit.sendwhatmsg("+31636523113", "Message2", int(a.strftime('%H')), int(a.strftime('%M')) + 1)
