@@ -16,6 +16,7 @@ load_dotenv(find_dotenv())  # load env
 
 script_dir = os.path.dirname(os.path.realpath(__file__))  # raspberry pi
 os.chdir(script_dir)
+os.chmod('images', 755)
 
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
