@@ -1,16 +1,18 @@
-from camera import camera
-import requests
-from calculations import kilometerToNauticalMile
-from functools import partial
-import pyproj
-from shapely.ops import transform
-from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
 import base64
 import os
+from functools import partial
+
+import requests
 from dotenv import load_dotenv, find_dotenv
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
+from shapely.ops import transform
+import pyproj
+
+from calculations import kilometerToNauticalMile
+from camera import camera
+
 # import pywhatkit
-from datetime import datetime
 
 load_dotenv(find_dotenv())  # load env
 
@@ -47,8 +49,8 @@ def check(lons_lats_vect):
         if polygonCheck:
             camera.capture()
 
-            # file_name = r'/srv/flights.mitchellbreden.nl/images/flight.jpg'
-            with open("flight.jpg", "rb") as img_file:
+            file_name = r'/srv/flights.mitchellbreden.nl/images/flight.jpg'
+            with open(file_name, "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
 
             try:
