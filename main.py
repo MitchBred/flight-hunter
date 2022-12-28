@@ -14,6 +14,9 @@ from datetime import datetime
 
 load_dotenv(find_dotenv())  # load env
 
+script_dir = os.path.dirname(os.path.realpath(__file__))  # raspberry pi
+os.chdir(script_dir)
+
 proj_wgs84 = pyproj.Proj('+proj=longlat +datum=WGS84')
 
 
@@ -44,8 +47,8 @@ def check(lons_lats_vect):
         if polygonCheck:
             camera.capture()
 
-            file_name = r'/srv/flights.mitchellbreden.nl/images/flight.jpg'
-            with open(file_name, "rb") as img_file:
+            # file_name = r'/srv/flights.mitchellbreden.nl/images/flight.jpg'
+            with open("flight.jpg", "rb") as img_file:
                 data_uri = base64.b64encode(img_file.read())
 
             try:
