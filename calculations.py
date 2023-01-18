@@ -1,5 +1,6 @@
 import os
 
+
 def kilometerToNauticalMile():
     kilometers = int(os.getenv('KM'))
     degreesPerMin = 90 * 60

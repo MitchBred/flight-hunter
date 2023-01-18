@@ -1,7 +1,8 @@
 import base64
 import os
 from functools import partial
-
+import whatsapp
+import subprocess
 import requests
 from dotenv import load_dotenv, find_dotenv
 from shapely.geometry import Point
@@ -10,9 +11,10 @@ from shapely.ops import transform
 import pyproj
 
 from calculations import kilometerToNauticalMile
-from camera import camera
 
-# import pywhatkit
+# diable import for dev
+# from camera import photo
+from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -33,11 +35,11 @@ def geodesic_point_buffer(lat, lon, km):
 
 def check(lons_lats_vect):
     polygon = Polygon(lons_lats_vect)  # create polygon
-
+    print(polygon)
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometerToNauticalMile()}/"
     headers = {
-        "X-RapidAPI-Key": os.getenv('X-RAPID-API-KEY'),
-        "X-RapidAPI-Host": os.getenv('X-RAPID-API-HOST'),
+        "X-RapidAPI-Key": os.getenv('X_RAPID_API_KEY'),
+        "X-RapidAPI-Host": os.getenv('X_RAPID_API_HOST'),
     }
     response = requests.request("GET", url, headers=headers).json()
 
@@ -47,11 +49,8 @@ def check(lons_lats_vect):
         polygonLower = str(polygonCheck).lower()
 
         if polygonCheck:
-            camera.capture()
-
-            file_name = r'/srv/flights.mitchellbreden.nl/images/flight.jpg'
-            with open(file_name, "rb") as img_file:
-                data_uri = base64.b64encode(img_file.read())
+            # disable photo/video capture for dev
+            video.record(list['flight'])
 
             try:
                 print('flight:', list['flight'])
@@ -60,19 +59,19 @@ def check(lons_lats_vect):
                     "lat": list['lat'],
                     "lon": list['lon'],
                     "flight": list['flight'],
-                    "image": data_uri
+                    "image": 'empty',
                 }
                 requests.post('https://huis.mitchellbreden.nl/api/flight-data', data=payload)
             except:
                 pass
         else:
-            print("No flights in area")
+            print("no flights in area")
 
 
 # Runs scripts
 if __name__ == '__main__':
     b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), int(os.getenv('KM')))
     check(b)
-    # todo import send whatsapp message as subprocess
-    # a = datetime.now()
-    # pywhatkit.sendwhatmsg("+31636523113", "Message2", int(a.strftime('%H')), int(a.strftime('%M')) + 1)
+
+    # config first whatsapp
+    # subprocess.run(["python", whatsapp.sendImage()])
