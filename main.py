@@ -43,13 +43,14 @@ def check(lons_lats_vect):
     response = requests.request("GET", url, headers=headers).json()
 
     for list in response['ac']:
+        print(list['flight'])
         point = Point(list['lon'], list['lat'])  # create point
         polygonCheck = point.within(polygon)  # check if a point is in the polygon
         polygonLower = str(polygonCheck).lower()
 
         if polygonCheck:
             # disable photo/video capture for dev
-            # video.record(list['flight'])
+            video.record(list['flight'])
 
             try:
                 payload = {
