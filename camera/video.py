@@ -4,7 +4,7 @@ picam2 = Picamera2()
 
 
 def record(flight):
-    flightFormat = str(flight).lower().strip() + '.jpg'
+    flightFormat = str(flight).lower().strip() + '.mp4'
     picam2.start_and_record_video(flightFormat, duration=10)
     upload_video(flightFormat)
 
