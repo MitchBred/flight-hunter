@@ -35,7 +35,6 @@ def geodesic_point_buffer(lat, lon, km):
 
 def check(lons_lats_vect):
     polygon = Polygon(lons_lats_vect)  # create polygon
-    print(polygon)
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometerToNauticalMile()}/"
     headers = {
         "X-RapidAPI-Key": os.getenv('X_RAPID_API_KEY'),
