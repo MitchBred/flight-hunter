@@ -14,7 +14,7 @@ from calculations import kilometerToNauticalMile
 
 # diable import for dev
 # from camera import photo
-from camera import video
+# from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -35,7 +35,6 @@ def geodesic_point_buffer(lat, lon, km):
 
 def check(lons_lats_vect):
     polygon = Polygon(lons_lats_vect)  # create polygon
-    print(polygon)
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometerToNauticalMile()}/"
     headers = {
         "X-RapidAPI-Key": os.getenv('X_RAPID_API_KEY'),
@@ -50,10 +49,9 @@ def check(lons_lats_vect):
 
         if polygonCheck:
             # disable photo/video capture for dev
-            video.record(list['flight'])
+            # video.record(list['flight'])
 
             try:
-                print('flight:', list['flight'])
                 payload = {
                     "in_polygon": polygonLower,
                     "lat": list['lat'],
