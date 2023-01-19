@@ -1,8 +1,8 @@
 import base64
 import os
 from functools import partial
-import whatsapp
-import subprocess
+# import whatsapp
+# import subprocess
 import requests
 from dotenv import load_dotenv, find_dotenv
 from shapely.geometry import Point
