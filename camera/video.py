@@ -18,5 +18,4 @@ def upload_video(flight):
     )
 
     # image = 'images/flight.jpg'
-    video = r'videos/' + flight
-    client.upload_file(video, 'mitch-flights', flight)
+    client.upload_file(flight, 'mitch-flights', flight)
