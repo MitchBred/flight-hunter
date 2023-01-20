@@ -54,8 +54,7 @@ def check(lons_lats_vect):
             flightImage = "false"
             flightVideo = "false"
             if os.getenv('CAPTURE_IMAGE') is None:
-                flightImage = 'images/'+str(list['flight']).lower().strip() + '.png'
-                photo.capture(flightImage)
+                photo.capture()
             else:
                 print('flightvideo')
                 flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
