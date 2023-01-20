@@ -13,7 +13,7 @@ import pyproj
 from calculations import kilometerToNauticalMile
 
 # diable import for dev
-# from camera import photo
+from camera import photo
 from camera import video
 
 load_dotenv(find_dotenv())  # load env
@@ -34,6 +34,7 @@ def geodesic_point_buffer(lat, lon, km):
 
 
 def check(lons_lats_vect):
+    global flightImage, flightVideo
     polygon = Polygon(lons_lats_vect)  # create polygon
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometerToNauticalMile()}/"
     headers = {
@@ -50,7 +51,14 @@ def check(lons_lats_vect):
 
         if polygonCheck:
             # disable photo/video capture for dev
-            video.record(list['flight'])
+            flightImage = "false"
+            flightVideo = "false"
+            if os.getenv('CAPTURE_IMAGE') is None:
+                flightImage = 'images/'+str(list['flight']).lower().strip() + '.png'
+                photo.capture(flightImage)
+            else:
+                flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
+                video.record(flightVideo)
 
             try:
                 payload = {
@@ -58,9 +66,10 @@ def check(lons_lats_vect):
                     "lat": list['lat'],
                     "lon": list['lon'],
                     "flight": list['flight'],
-                    "image": 'empty',
+                    "image": flightImage,
+                    "video": flightVideo,
                 }
-                requests.post('https://huis.mitchellbreden.nl/api/flight-data', data=payload)
+                requests.post('https://projects.mitchellbreden.nl/api/flight-data', data=payload)
             except:
                 pass
         else:
