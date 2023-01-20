@@ -12,3 +12,4 @@ def capture(flightImage):
     time.sleep(2)
     picam2.capture_file("test.jpg")
     picam2.stop()
+    print("done")
