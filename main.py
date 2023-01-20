@@ -13,7 +13,7 @@ import pyproj
 from calculations import kilometerToNauticalMile
 
 # diable import for dev
-from camera import photo
+# from camera import photo
 from camera import video
 
 load_dotenv(find_dotenv())  # load env
@@ -54,10 +54,11 @@ def check(lons_lats_vect):
             flightImage = "false"
             flightVideo = "false"
             if os.getenv('CAPTURE_IMAGE') is None:
-                photo.capture()
+                # photo.capture()
+                print('capture')
             else:
-                print('flightvideo')
-                flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
+                # flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
+                print('flight video')
                 video.record()
 
             try:
