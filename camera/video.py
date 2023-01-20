@@ -4,7 +4,7 @@ import boto3
 picam2 = Picamera2()
 
 
-def record():
-    # flightFormat = str(flightVideo).lower().strip()
-    picam2.start_and_record_video("afr76up.mp4", duration=10)
-    # upload_video(flightFormat)
+def record(flightVideo):
+    flight = str(flightVideo).lower().strip()
+    print(flight)
+    picam2.start_and_record_video(flight, duration=10)

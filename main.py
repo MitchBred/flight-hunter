@@ -57,9 +57,9 @@ def check(lons_lats_vect):
                 # photo.capture()
                 print('capture')
             else:
-                # flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
+                flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
                 print('flight video')
-                video.record()
+                video.record(flightVideo)
 
             try:
                 payload = {
