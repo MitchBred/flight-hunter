@@ -59,7 +59,7 @@ def check(lons_lats_vect):
             else:
                 print('flightvideo')
                 flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
-                video.record(flightVideo)
+                video.record()
 
             try:
                 payload = {
