@@ -7,7 +7,7 @@ picam2.configure(config)
 picam2.start_preview(Preview.NULL)
 
 
-def capture(flightImage):
+def capture():
     picam2.start()
     time.sleep(2)
     picam2.capture_file("test.jpg")
