@@ -20,3 +20,7 @@ def upload_video(flightFormat):
     # image = 'images/flight.jpg'
     video = r'videos/' + flightFormat
     client.upload_file(video, 'mitch-flights', flightFormat)
+
+
+if __name__ == '__video__':
+    record()
