@@ -57,7 +57,7 @@ def check(lons_lats_vect):
                 flightImage = 'images/'+str(list['flight']).lower().strip() + '.png'
                 photo.capture(flightImage)
             else:
-                print(flightvideo)
+                print('flightvideo')
                 flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
                 video.record(flightVideo)
 
