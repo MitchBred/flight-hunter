@@ -70,7 +70,6 @@ def check(lons_lats_vect):
                     "image": flightImage,
                     "video": flightVideo,
                 }
-                print(payload)
                 requests.post('https://projects.mitchellbreden.nl/api/flight-data', data=payload)
             except:
                 pass
