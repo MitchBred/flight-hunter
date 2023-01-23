@@ -13,7 +13,7 @@ import pyproj
 from calculations import kilometerToNauticalMile
 
 # diable import for dev
-from camera import photo
+# from camera import photo
 from camera import video
 
 load_dotenv(find_dotenv())  # load env
