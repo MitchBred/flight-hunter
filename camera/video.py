@@ -6,7 +6,7 @@ picam2 = Picamera2()
 
 def record(flightVideo):
     flight = str(flightVideo).lower().strip()
-    picam2.start_and_record_video(flight, duration=10)
+    picam2.start_and_record_video(flight, duration=20)
     upload_video(flight)
 
 
