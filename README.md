@@ -1,13 +1,16 @@
-<img  src="https://projects.mitchellbreden.nl/assets/images/satellite-with-text.svg" width="300">
+<img src="https://projects.mitchellbreden.nl/assets/images/satellite-with-text.svg" width="300">
 
-# Project Title
+# Flight Hunter
 
-This is a flight hunter made with a Raspberry pi 3B+. It can take photos or videos and store them on an AWS S3 cloud.
+This is a Flight Hunter made with a Raspberry pi 3B+. It can take photos or videos and store them on an AWS S3 cloud.
 This project was created because a Raspberry pi 3b+ has been in the closet for years.
 
 ## Screenshots
 
-https://mitch-flights.s3.eu-central-1.amazonaws.com/videos/koc01.mp4
+<video width="400" controls>
+  <source src="https://mitch-flights.s3.eu-central-1.amazonaws.com/videos/koc01.mp4" type="video/mp4">
+  Your browser does not support HTML video.
+</video>
 
 ## Run Locally
 
