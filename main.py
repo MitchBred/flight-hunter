@@ -1,8 +1,5 @@
-import base64
 import os
 from functools import partial
-# import whatsapp
-# import subprocess
 import requests
 from dotenv import load_dotenv, find_dotenv
 from shapely.geometry import Point
@@ -12,7 +9,7 @@ import pyproj
 
 from calculations import kilometerToNauticalMile
 
-# diable import for dev
+# disable import for dev
 # from camera import photo
 from camera import video
 
@@ -53,10 +50,10 @@ def check(lons_lats_vect):
             # disable photo/video capture for dev
             flightImage = "false"
             flightVideo = "false"
-            if os.getenv('CAPTURE_IMAGE') is None:
-                photo.capture()
+            if os.getenv('CAPTURE') is 'photo':
+                # photo.capture()  # disable import for dev
             else:
-                flightVideo = 'videos/'+str(list['flight']).lower().strip() + '.mp4'
+                flightVideo = 'videos/' + str(list['flight']).lower().strip() + '.mp4'
                 video.record(flightVideo)
 
             try:
@@ -79,6 +76,3 @@ def check(lons_lats_vect):
 if __name__ == '__main__':
     b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), int(os.getenv('KM')))
     check(b)
-
-    # config first whatsapp
-    # subprocess.run(["python", whatsapp.sendImage()])
