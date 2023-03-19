@@ -16,7 +16,7 @@ https://user-images.githubusercontent.com/33968202/226148790-3a6a643a-3daf-4db7-
 Clone the project
 
 ```bash
-  git clone https://github.com/MitchBred/flights.mitchellbreden.nl
+  git clone https://github.com/MitchBred/flight-hunter
 ```
 
 Go to the project directory
@@ -100,7 +100,7 @@ To run this project, you will need to add the following environment variables to
 
 - Create archive page.
 
-- Laravel app to an Node app
+- Laravel app to a Node app
 
 ## Demo
 
@@ -116,7 +116,7 @@ Here the server side of the related project
 
 What did you learn while building this project? What challenges did you face and how did you overcome them?
 
-- Install 64 bits version ubuntu server and not a 32 bits version.
+- Install 64 bits version Ubuntu Server and not a 32 bits version.
 - Can only use capture functions on the Raspberry pi.
 - [Check](https://youtu.be/bwE4Mr-2ksQ) the right user privileges before you install the project on the Raspberry pi.
 - [Check how to](youtube.com/watch?v=nx8gDSS1vO4) connect the camera connection through the Raspberry pi.
@@ -124,7 +124,7 @@ What did you learn while building this project? What challenges did you face and
 
 ## Authors
 
-- [@MitchBred](https://www.github.com/MithBred)
+- [@MitchBred](https://www.github.com/MitchBred)
 
 ## License
 
