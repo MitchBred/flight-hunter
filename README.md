@@ -22,7 +22,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd flights.mitchellbreden.nl
+  cd flight-hunter
 ```
 
 Install dependencies
@@ -33,7 +33,14 @@ Install dependencies
 
 Tips:
 
-- If you install this project on a Raspberry pi check first [Lessons Learned]
+- If you install this project on a Raspberry pi check
+  first [[Lessons Learned]](https://github.com/MitchBred/flight-hunter/blob/master/README.md#lessons-learned)
+
+Copy .env.example to .env
+
+```bash
+cp .env.example .env
+```
 
 ## Environment Variables
 
@@ -57,11 +64,15 @@ To run this project, you will need to add the following environment variables to
 
 `OS`
 
+## Run script automatically
+
+[TODO]Cronjob..
+
 ## Features
 
 - Live previews.
 - Choose between image or video capturing.
-- Calculate radius from your home.
+- Calculate radius distance from your home.
 - Send images trough Whatsapp.
 
 ## Tech Stack
@@ -109,6 +120,7 @@ What did you learn while building this project? What challenges did you face and
 - Can only use capture functions on the Raspberry pi.
 - [Check](https://youtu.be/bwE4Mr-2ksQ) the right user privileges before you install the project on the Raspberry pi.
 - [Check how to](youtube.com/watch?v=nx8gDSS1vO4) connect the camera connection through the Raspberry pi.
+- Check sometimes your logging `cat /var/log/syslog`
 
 ## Authors
 
