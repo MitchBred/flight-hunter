@@ -10,7 +10,7 @@ This project was created because a Raspberry pi 3b+ has been in the closet for y
 ## Screenshots
 
 <video width="400" controls>
-  <source src="https://mitch-flights.s3.eu-central-1.amazonaws.com/videos/koc01.mp4" type="video/mp4">
+  <source src="https://projects.mitchellbreden.nl/assets/video/preview.mp4" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
