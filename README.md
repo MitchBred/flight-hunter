@@ -25,16 +25,22 @@ Go to the project directory
   cd flight-hunter
 ```
 
+You can always generate `.env` file manually by running
+
+```bash
+cp .env.example .env
+```
+
 Install dependencies
 
 ```bash
-  pip install -r requirements.txt
+  python -m pip install -r requirements.txt
 ```
 
 Tips:
 
 - If you install this project on a Raspberry pi check
-  first [[Lessons Learned]](https://github.com/MitchBred/flight-hunter/blob/master/README.md#lessons-learned)
+  first [[Lessons Learned]](https://github.com/MitchBred/flight-hunter#lessons-learned)
 
 Copy .env.example to .env
 
