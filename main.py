@@ -9,8 +9,8 @@ from shapely.geometry.polygon import Polygon
 from shapely.ops import transform
 
 from calculations import kilometerToNauticalMile
-
 from camera import video
+
 # disable import for dev
 # from camera import photo
 
@@ -53,12 +53,12 @@ def check(lons_lats_vect):
             flightVideo = "false"
             if os.getenv('OS') == 'pi':
                 if os.getenv('CAPTURE') == 'video':
-                    # flightVideo = 'videos/' + str(list['flight']).lower().strip() + '.mp4'
-                    # video.record(flightVideo)
+                    flightVideo = 'videos/' + str(list['flight']).lower().strip() + '.mp4'
+                    video.record(flightVideo)
                 else:
-                    # photo.capture()  # disable import for dev
+                    photo.capture()  # disable import for dev
             else:
-                flightVideo = 'videos/' + str(list['flight']).lower().strip() + '.mp4'
+                flightVideo = 'videos/preview.mp4'
                 video.record(flightVideo)
 
             try:
@@ -79,5 +79,5 @@ def check(lons_lats_vect):
 
 # Runs scripts
 if __name__ == '__main__':
-    b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), int(os.getenv('KM')))
+    b = geodesic_point_buffer(os.getenv('LAT'), os.getenv('LON'), int(os.getenv('KM_RADIUS')))
     check(b)
