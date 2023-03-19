@@ -1,17 +1,18 @@
 import os
 from functools import partial
+
+import pyproj
 import requests
 from dotenv import load_dotenv, find_dotenv
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 from shapely.ops import transform
-import pyproj
 
 from calculations import kilometerToNauticalMile
 
+from camera import video
 # disable import for dev
 # from camera import photo
-from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -50,8 +51,12 @@ def check(lons_lats_vect):
             # disable photo/video capture for dev
             flightImage = "false"
             flightVideo = "false"
-            if os.getenv('CAPTURE') is 'photo':
-                # photo.capture()  # disable import for dev
+            if os.getenv('OS') == 'pi':
+                if os.getenv('CAPTURE') == 'video':
+                    # flightVideo = 'videos/' + str(list['flight']).lower().strip() + '.mp4'
+                    # video.record(flightVideo)
+                else:
+                    # photo.capture()  # disable import for dev
             else:
                 flightVideo = 'videos/' + str(list['flight']).lower().strip() + '.mp4'
                 video.record(flightVideo)

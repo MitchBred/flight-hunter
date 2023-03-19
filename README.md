@@ -1,4 +1,7 @@
-<img src="https://projects.mitchellbreden.nl/assets/images/satellite-with-text.svg" width="300">
+<p align="center">
+<img src="https://projects.mitchellbreden.nl/assets/images/satellite-with-text.svg" width="300"><br>
+<img src="https://img.shields.io/github/commit-activity/w/MitchBred/flight-hunter">
+</p>
 
 # Flight Hunter
 
