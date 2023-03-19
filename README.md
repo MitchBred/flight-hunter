@@ -12,10 +12,6 @@ This project was created because a Raspberry pi 3b+ has been in the closet for y
   Your browser does not support HTML video.
 </video>
 
-
-Uploading koc01 (3).mp4…
-
-
 ## Run Locally
 
 Clone the project
