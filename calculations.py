@@ -1,7 +1,7 @@
 import os
 
 
-def kilometerToNauticalMile():
+def kilometer_to_nautical_mile():
     kilometers = int(os.getenv('KM_RADIUS'))
     degreesPerMin = 90 * 60
     oneKilo = degreesPerMin / 10000
