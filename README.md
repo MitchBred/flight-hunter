@@ -9,9 +9,7 @@ This project was created because a Raspberry pi 3b+ has been in the closet for y
 
 ## Screenshots
 
-<video width="320" height="240" controls>
-  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-</video>
+https://projects.mitchellbreden.nl/assets/video/preview.mp4
 
 ## Run Locally
 
