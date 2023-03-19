@@ -7,7 +7,7 @@
 This is a Flight Hunter made with a Raspberry pi 3B+. It can take photos or videos and store them on an AWS S3 cloud.
 This project was created because a Raspberry pi 3b+ has been in the closet for years.
 
-## Screenshots
+## Video
 
 https://user-images.githubusercontent.com/33968202/226148790-3a6a643a-3daf-4db7-a782-36524392bcfa.mp4
 
