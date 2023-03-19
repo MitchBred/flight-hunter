@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://projects.mitchellbreden.nl/assets/images/satellite-with-text.svg" width="300"><br>
+<img src="https://user-images.githubusercontent.com/33968202/226171434-66729970-bffa-4c76-80ac-a840fadab79d.svg" width="300"><br>
 </p>
 
 # Flight Hunter
