@@ -1,6 +1,5 @@
 <p align="center">
 <img src="https://projects.mitchellbreden.nl/assets/images/satellite-with-text.svg" width="300"><br>
-<img src="https://img.shields.io/github/commit-activity/w/MitchBred/flight-hunter">
 </p>
 
 # Flight Hunter
@@ -55,7 +54,7 @@ To run this project, you will need to add the following environment variables to
 
 `LON`
 
-`KM`
+`KM_RADIUS`
 
 `CAPTURE`
 
@@ -78,7 +77,7 @@ To run this project, you will need to add the following environment variables to
 
 - Standby mode on Raspberry pi when there are clouds.
 
-- Monitor Raspberry pi 3b+ (voltage, etc.).
+- Monitoring Raspberry pi 3b+ (voltage, etc.).
 
 - Add USB camera (better quality) with 360° view.
 
@@ -87,9 +86,11 @@ To run this project, you will need to add the following environment variables to
 - Send images or videos to your own whatsapp chat.
   https://github.com/Ankit404butfound/PyWhatKit
 
-- Get Latitude and Longitude from Raspberry pi.
+- Get automatically Latitude and Longitude from Raspberry pi.
 
-- Create archive page. [Related project](https://github.com/MitchBred/flights.mitchellbreden.nl-backend)
+[Related project](https://github.com/MitchBred/flights.mitchellbreden.nl-backend)
+
+- Create archive page.
 
 - Laravel app to an Node app
 
