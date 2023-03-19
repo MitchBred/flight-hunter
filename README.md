@@ -9,7 +9,7 @@ This project was created because a Raspberry pi 3b+ has been in the closet for y
 
 ## Screenshots
 
-https://projects.mitchellbreden.nl/assets/video/preview.mp4
+https://user-images.githubusercontent.com/33968202/226148790-3a6a643a-3daf-4db7-a782-36524392bcfa.mp4
 
 ## Run Locally
 
