@@ -74,6 +74,7 @@ def check(lons_lats_vect):
                         requests.post("https://projects.mitchellbreden.nl/api/flight-data", data=payload)
                     except:
                         pass
+
                 else:
                     print('Flights | no flights in polygon area.', response.status_code)
         else:
