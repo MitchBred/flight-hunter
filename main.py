@@ -74,13 +74,13 @@ def check(lons_lats_vect):
                     except:
                         pass
                 else:
-                    print("Flights | no flights in polygon area")
+                    print('Flights | no flights in polygon area', response.status_code)
         elif response.status_code == 503:
-            print('Server down | the server is not ready to handle the request')
+            print('Server down | the server is not ready to handle the request', response.status_code)
         else:
-            print('Server down | check request')
+            print('Server down | check request', response.status_code)
     else:
-        print("Flights | no flights in kilometer area")
+        print('Flights | no flights in kilometer area', response.status_code)
 
 
 # Runs scripts
