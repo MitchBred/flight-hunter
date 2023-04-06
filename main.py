@@ -9,10 +9,8 @@ from shapely.geometry.polygon import Polygon
 from shapely.ops import transform
 
 from calculations import kilometer_to_nautical_mile
-from camera import video
-
 # disable import for dev
-# from camera import photo
+from camera import video, photo
 
 load_dotenv(find_dotenv())  # load env
 
@@ -44,44 +42,45 @@ def check(lons_lats_vect):
 
     if response.status_code == 200:
         flights = response.json()
-        for item in flights["ac"]:
-            print(item["flight"])
-            point = Point(item["lon"], item["lat"])  # create point
-            polygon_check = point.within(polygon)  # check if a point is in the polygon
-            polygon_lower = str(polygon_check).lower()
+        if flights['ac'] is not None:
+            for item in flights['ac']:
+                point = Point(item['lon'], item['lat'])  # create point
+                polygon_check = point.within(polygon)  # check if a point is in the polygon
+                polygon_lower = str(polygon_check).lower()
 
-            if polygon_check:
-                # disable photo/video capture for dev
-                flight_image = "false"
-                flight_video = "false"
-                if os.getenv("OS") == "pi":
-                    if os.getenv("CAPTURE") == "video":
-                        flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
-                        video.record(flight_video)
+                if polygon_check:
+                    flight_image = "false"
+                    flight_video = "false"
+                    if os.getenv("OS") == 'pi':
+                        if os.getenv("CAPTURE") == 'video':
+                            flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
+                            video.record(flight_video)
+                        else:
+                            photo.capture()  # disable import for dev
                     else:
-                        photo.capture()  # disable import for dev
-                else:
-                    flight_video = "videos/preview.mp4"
-                    video.record(flight_video)
+                        flight_video = "videos/preview.mp4"
+                        video.record(flight_video)
 
-                try:
-                    payload = {
-                        "in_polygon": polygon_lower,
-                        "lat": item["lat"],
-                        "lon": item["lon"],
-                        "flight": item["flight"],
-                        "image": flight_image,
-                        "video": flight_video,
-                    }
-                    requests.post("https://projects.mitchellbreden.nl/api/flight-data", data=payload)
-                except:
-                    pass
-            else:
-                print("no flights in area")
-    elif response.status_code == 503:
-        print('Server down | the server is not ready to handle the request')
+                    try:
+                        payload = {
+                            "in_polygon": polygon_lower,
+                            "lat": item["lat"],
+                            "lon": item["lon"],
+                            "flight": item["flight"],
+                            "image": flight_image,
+                            "video": flight_video,
+                        }
+                        requests.post("https://projects.mitchellbreden.nl/api/flight-data", data=payload)
+                    except:
+                        pass
+                else:
+                    print("Flights | no flights in polygon area")
+        elif response.status_code == 503:
+            print('Server down | the server is not ready to handle the request')
+        else:
+            print('Server down | check request')
     else:
-        print('Server down | check request')
+        print("Flights | no flights in kilometer area")
 
 
 # Runs scripts
