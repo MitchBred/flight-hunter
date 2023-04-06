@@ -44,6 +44,7 @@ def check(lons_lats_vect):
         flights = response.json()
         if flights['ac'] is not None:
             for item in flights['ac']:
+                print(item['flight'])
                 point = Point(item['lon'], item['lat'])  # create point
                 polygon_check = point.within(polygon)  # check if a point is in the polygon
                 polygon_lower = str(polygon_check).lower()
@@ -74,13 +75,13 @@ def check(lons_lats_vect):
                     except:
                         pass
                 else:
-                    print('Flights | no flights in polygon area', response.status_code)
-        elif response.status_code == 503:
-            print('Server down | the server is not ready to handle the request', response.status_code)
+                    print('Flights | no flights in polygon area.', response.status_code)
         else:
-            print('Server down | check request', response.status_code)
+            print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
+    elif response.status_code == 503:
+        print('Server down | the server is not ready to handle the request.', response.status_code)
     else:
-        print('Flights | no flights in kilometer area', response.status_code)
+        print('Server down | check request.', response.status_code)
 
 
 # Runs scripts
