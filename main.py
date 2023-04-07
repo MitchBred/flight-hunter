@@ -51,11 +51,8 @@ def check(lons_lats_vect):
 
                 if polygon_check:
                     flight_image = "false"
-                    flight_video = "false"
-
                     flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
-                    video.record(flight_video)
-
+                    
                     try:
                         payload = {
                             "in_polygon": polygon_lower,
@@ -68,6 +65,8 @@ def check(lons_lats_vect):
                         requests.post("https://projects.mitchellbreden.nl/api/flight-data", data=payload)
                     except:
                         pass
+
+                    video.record(flight_video)
 
                 else:
                     print('Flights | no flights in polygon area.', response.status_code)
