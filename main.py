@@ -10,7 +10,7 @@ from shapely.ops import transform
 
 from calculations import kilometer_to_nautical_mile
 # disable import for dev
-from camera import video, photo
+from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -52,15 +52,9 @@ def check(lons_lats_vect):
                 if polygon_check:
                     flight_image = "false"
                     flight_video = "false"
-                    if os.getenv("OS") == 'pi':
-                        if os.getenv("CAPTURE") == 'video':
-                            flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
-                            video.record(flight_video)
-                        else:
-                            photo.capture()  # disable import for dev
-                    else:
-                        flight_video = "videos/preview.mp4"
-                        video.record(flight_video)
+
+                    flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
+                    video.record(flight_video)
 
                     try:
                         payload = {
