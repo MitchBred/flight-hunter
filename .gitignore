@@ -1,0 +1,6 @@
+/.idea
+.idea/
+.DS_Store
+.env
+__pychache__/
+__pychache__
