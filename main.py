@@ -68,7 +68,7 @@ def check(lons_lats_vect):
                     except:
                         pass
 
-                    # video.record(flight_video)
+                    video.record(flight_video)
         else:
             print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
     elif response.status_code == 503:
