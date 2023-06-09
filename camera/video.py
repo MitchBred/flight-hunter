@@ -1,4 +1,5 @@
 import os
+import time
 
 import boto3
 from picamera2 import Picamera2
@@ -11,7 +12,7 @@ def record(flightVideo):
     picam2.start_and_record_video(flight, duration=20)
 
     upload_video(flight)
-
+    time.sleep(0.1)
 
 def upload_video(flight):
     client = boto3.client(
