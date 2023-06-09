@@ -52,8 +52,8 @@ def check(lons_lats_vect):
 
                 if polygon_check:
                     flight_image = "false"
-                    flight_video = "videos/preview.mp4"
-                    # flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
+                    # flight_video = "videos/preview.mp4"
+                    flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
 
                     try:
                         payload = {
