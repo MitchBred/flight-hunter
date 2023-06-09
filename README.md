@@ -37,6 +37,11 @@ Install dependencies
   python -m pip install -r requirements.txt
 ```
 
+Run script
+```
+  python main.py
+```
+
 Tips:
 
 - If you install this project on a Raspberry pi check

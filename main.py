@@ -44,34 +44,31 @@ def check(lons_lats_vect):
         flights = response.json()
         if flights['ac'] is not None:
             for item in flights['ac']:
-                # if condition to ignore small flights
-                if item['category'] is not None or item['category'] != "A0":
-                    print(item['flight'])
-                    point = Point(item['lon'], item['lat'])  # create point
-                    polygon_check = point.within(polygon)  # check if a point is in the polygon
-                    polygon_lower = str(polygon_check).lower()
+                # TODO: add if condition to ignore small flights
+                print(item['flight'])
+                point = Point(item['lon'], item['lat'])  # create point
+                polygon_check = point.within(polygon)  # check if a point is in the polygon
+                polygon_lower = str(polygon_check).lower()
 
-                    if polygon_check:
-                        flight_image = "false"
-                        flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
+                if polygon_check:
+                    flight_image = "false"
+                    flight_video = "videos/preview.mp4"
+                    # flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
 
-                        try:
-                            payload = {
-                                "in_polygon": polygon_lower,
-                                "lat": item["lat"],
-                                "lon": item["lon"],
-                                "flight": item["flight"],
-                                "image": flight_image,
-                                "video": flight_video,
-                            }
-                            requests.post("https://projects.mitchellbreden.nl/api/flight-data", data=payload)
-                        except:
-                            pass
+                    try:
+                        payload = {
+                            "in_polygon": polygon_lower,
+                            "lat": item["lat"],
+                            "lon": item["lon"],
+                            "flight": item["flight"],
+                            "image": flight_image,
+                            "video": flight_video,
+                        }
+                        requests.post(os.getenv('PROJECT_URL'), data=payload)
+                    except:
+                        pass
 
-                        video.record(flight_video)
-
-                else:
-                    print('Flights | no flights in polygon area.', response.status_code)
+                    # video.record(flight_video)
         else:
             print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
     elif response.status_code == 503:
