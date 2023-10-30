@@ -7,6 +7,7 @@ from pyproj import CRS, Transformer
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 from shapely.ops import transform
+import status
 
 from calculations import kilometer_to_nautical_mile
 # disable import for dev
@@ -72,12 +73,13 @@ def check(lons_lats_vect):
         else:
             print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
     elif response.status_code == 503:
-        print('Server down | the server is not ready to handle the request.', response.status_code)
+        print('Server down | the RAPID server is down.', response.status_code)
     else:
         print('Server down | check request.', response.status_code)
 
 
 # Runs scripts
 if __name__ == "__main__":
+    status.run()
     buffer = geodesic_point_buffer(os.getenv("LAT"), os.getenv("LON"), int(os.getenv("KM_RADIUS")))
     check(buffer)
