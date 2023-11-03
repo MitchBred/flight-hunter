@@ -1,4 +1,4 @@
-boto3==1.28.74
+boto3==1.28.77
 pyproj==3.6.1
 requests==2.31.0
 python-dotenv==1.0.0
