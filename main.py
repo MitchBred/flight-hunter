@@ -8,10 +8,10 @@ from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 from shapely.ops import transform
 import status
-
+import weather.api
 from calculations import kilometer_to_nautical_mile
 # disable import for dev
-from camera import video
+# from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -65,11 +65,12 @@ def check(lons_lats_vect):
                             "image": flight_image,
                             "video": flight_video,
                         }
+                        print(payload)
                         requests.post(os.getenv('PROJECT_URL'), data=payload)
                     except:
                         pass
 
-                    video.record(flight_video)
+                    # video.record(flight_video)
         else:
             print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
     elif response.status_code == 503:
@@ -78,8 +79,8 @@ def check(lons_lats_vect):
         print('Server down | check request.', response.status_code)
 
 
-# Runs scripts
 if __name__ == "__main__":
-    status.run()
-    buffer = geodesic_point_buffer(os.getenv("LAT"), os.getenv("LON"), int(os.getenv("KM_RADIUS")))
-    check(buffer)
+    if weather.api.clouds() < int(os.getenv('WEATHER_CLOUD_PERCENTAGE')):
+        status.run()
+        buffer = geodesic_point_buffer(os.getenv("LAT"), os.getenv("LON"), int(os.getenv("KM_RADIUS")))
+        check(buffer)

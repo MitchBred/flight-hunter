@@ -3,7 +3,10 @@ import os
 
 
 def run():
-    payload = {
-        "status": 200
-    }
-    requests.post(os.getenv('RASPBERRY_PI_STATUS'), data=payload)
+    try:
+        payload = {
+            "status": 200
+        }
+        response = requests.post(os.getenv('RASPBERRY_PI_STATUS'), data=payload)
+    except:
+        print('Server down | check request.', response.status_code)
