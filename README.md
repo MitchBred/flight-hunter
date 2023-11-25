@@ -79,6 +79,9 @@ To run this project, you will need to add the following environment variables to
 
 [TODO]Cronjob..
 
+## Create self-hosted runner
+- Use Linux ARM64
+
 ## Features
 
 - Live previews.
