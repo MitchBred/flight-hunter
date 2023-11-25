@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request: 
-    branches: [main] 
+    branches: [ main ] 
 
   workflow_dispatch:
 jobs:
@@ -11,3 +11,4 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: py-actions/py-dependency-install@v4
