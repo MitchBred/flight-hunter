@@ -80,6 +80,7 @@ def check(lons_lats_vect):
 
 
 if __name__ == "__main__":
+    print('test runner')
     status.run()
     clouds = weather.api.clouds()
     print(f'Currently, clouds are {clouds}%')
