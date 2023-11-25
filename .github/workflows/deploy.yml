@@ -1,8 +1,8 @@
 on:
   push:
     branches: [ main ]
-  pull_request: 
-    branches: [ main ] 
+  pull_request:
+    branches: [ main ]
 
   workflow_dispatch:
 jobs:
@@ -10,5 +10,9 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: py-actions/py-dependency-install@v4
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v4
+      - name: Run the scripts
+        run: ls -la
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v4
