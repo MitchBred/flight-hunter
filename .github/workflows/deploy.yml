@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
-        with:
-          path: '/home/pi/Desktop/flight-hunter'
       - name: Run the scripts
         run: ls -la
       - name: Install Python dependencies
