@@ -24,9 +24,6 @@ Pillow==9.5.0
 PyAutoGUI==0.9.54
 PyGetWindow==0.0.9
 PyMsgBox==1.0.9
-pyobjc-core==9.2
-pyobjc-framework-Cocoa==9.2
-pyobjc-framework-Quartz==9.2
 pyperclip==1.8.2
 pyproj==3.6.1
 PyRect==0.2.0
