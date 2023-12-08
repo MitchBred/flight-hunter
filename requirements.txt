@@ -47,5 +47,5 @@ soupsieve==2.4.1
 sqlparse==0.4.4
 typing_extensions==4.8.0
 urllib3==1.26.16
-Werkzeug==2.3.6
+Werkzeug==2.3.8
 wikipedia==1.4.0
