@@ -80,9 +80,9 @@ def check(lons_lats_vect):
 
 
 if __name__ == "__main__":
-    status.run()
     clouds = weather.api.clouds()
-    print(f'Currently, clouds are {clouds}%')
+    status.run(clouds)
+    print(f'The service is currently inactive.\nThe sky is {clouds}% covered with clouds.')
     if clouds < int(os.getenv('WEATHER_CLOUD_PERCENTAGE')):
         buffer = geodesic_point_buffer(os.getenv("LAT"), os.getenv("LON"), int(os.getenv("KM_RADIUS")))
         check(buffer)
