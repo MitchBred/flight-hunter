@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
-      - name: Run the scripts
-        run: ls -la
+      - name: Copy env to directory
+        run: cp ~/Desktop/flight-hunter-env/.env .env
       - name: Install Python dependencies
         uses: py-actions/py-dependency-install@v4
