@@ -14,5 +14,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Copy environment to directory
         run: cp ~/Desktop/flight-hunter-env/.env .env
-      - name: Install Python dependencies
-        uses: py-actions/py-dependency-install@v4
+      - name: Python Dependency Installation
+        uses: py-actions/py-dependency-install@v4.1.0
