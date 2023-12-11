@@ -16,5 +16,3 @@ jobs:
         run: cp ~/Desktop/flight-hunter-env/.env .env
       - name: Python Dependency Installation
         uses: py-actions/py-dependency-install@v4
-        with:
-          path: "Desktop/actions-runner/_work/flight-hunter/flight-hunter/requirements.txt"
