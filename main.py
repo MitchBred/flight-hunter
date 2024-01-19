@@ -9,9 +9,10 @@ from shapely.geometry.polygon import Polygon
 from shapely.ops import transform
 import status
 import weather.api
-from calculations import kilometer_to_nautical_mile
+from calculations.nauticalmile import kilometer_to_nautical_mile
+from calculations.position_and_speed import distance_in_minutes
 # disable import for dev
-from camera import video
+# from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -52,6 +53,9 @@ def check(lons_lats_vect):
                 polygon_lower = str(polygon_check).lower()
 
                 if polygon_check:
+                    if item['ias']:
+                        distance_in_minutes(item['lat'], item['lon'], item['ias'])
+
                     flight_image = "false"
                     # flight_video = "videos/preview.mp4"
                     flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
@@ -70,7 +74,7 @@ def check(lons_lats_vect):
                     except:
                         pass
 
-                video.record(flight_video)
+                # video.record(flight_video)
         else:
             print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
     elif response.status_code == 503:
