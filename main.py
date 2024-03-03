@@ -10,6 +10,7 @@ from shapely.ops import transform
 import status
 import weather.api
 from calculations import kilometer_to_nautical_mile
+
 # disable import for dev
 # from camera import video
 
@@ -46,8 +47,7 @@ def check(lons_lats_vect):
         flights = response.json()
         if flights['ac'] is not None:
             for item in flights['ac']:
-                if item['category'] is not None or item['category'] != "A0" and item['category'] != "A1":
-                    print(item['flight'])
+                if 'category' in item and (item['category'] is not None and item['category'] != "A0" and item['category'] != "A1"):
                     point = Point(item['lon'], item['lat'])  # create point
                     polygon_check = point.within(polygon)  # check if a point is in the polygon
                     polygon_lower = str(polygon_check).lower()
