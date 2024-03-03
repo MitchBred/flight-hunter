@@ -11,7 +11,7 @@ import status
 import weather.api
 from calculations import kilometer_to_nautical_mile
 # disable import for dev
-from camera import video
+# from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -35,6 +35,7 @@ def check(lons_lats_vect):
     global flight_image, flight_video
     polygon = Polygon(lons_lats_vect)  # create polygon
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometer_to_nautical_mile()}/"
+    print(url)
     headers = {
         "X-RapidAPI-Key": os.getenv("X_RAPID_API_KEY"),
         "X-RapidAPI-Host": os.getenv("X_RAPID_API_HOST"),
@@ -45,7 +46,7 @@ def check(lons_lats_vect):
         flights = response.json()
         if flights['ac'] is not None:
             for item in flights['ac']:
-                if item['category'] is not None or item['category'] != "A1":
+                if item['category'] is not None or item['category'] != "A0" and item['category'] != "A1":
                     print(item['flight'])
                     point = Point(item['lon'], item['lat'])  # create point
                     polygon_check = point.within(polygon)  # check if a point is in the polygon
