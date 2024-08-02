@@ -34,7 +34,7 @@ def geodesic_point_buffer(lat, lon, km):
 
 
 def check(lons_lats_vect):
-    global flight_image, flight_video
+    global flight_image, flight_video, item
     polygon = Polygon(lons_lats_vect)  # create polygon
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometer_to_nautical_mile()}/"
     headers = {
@@ -48,21 +48,18 @@ def check(lons_lats_vect):
         if flights['ac'] is not None:
             for item in flights['ac']:
                 # TODO: add if condition to ignore small flights
-                # Check if 'flight' key exists
-                if 'flight' not in item:
+                if 'flight' not in item:  # Check if 'flight' or 'ias' key exists in item
                     print("Missing 'flight' key in item:", item)
                     continue
+                if 'ias' not in item:
+                    print("Missing 'ias' key in item:", item)
+                    continue
 
-                print(item['flight'])
                 point = Point(item['lon'], item['lat'])  # create point
                 polygon_check = point.within(polygon)  # check if a point is in the polygon
                 polygon_lower = int(polygon_check)
 
                 if polygon_check:
-                    # check distance in minutes
-                    if item.get('ias'):
-                        distance_in_minutes(item['lat'], item['lon'], item.get('ias'))
-
                     flight_image = "false"
                     # flight_video = "videos/preview.mp4"
                     flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
@@ -83,11 +80,11 @@ def check(lons_lats_vect):
                     except:
                         pass
 
-            # check distance_in_minutes is less than 5 minutes and greater than 0 minutes before recording
-            if distance_in_minutes(item['lat'], item['lon'], item.get('ias')) < int(os.getenv('RECORD_VIDEO_LESS_THAN_DISTANCE')) and distance_in_minutes(
-                    item['lat'], item['lon'], item.get('ias')) > 0:
-                print('Recording video')
-                video.record(flight_video)
+                # check distance_in_minutes
+                if distance_in_minutes(item['lat'], item['lon'], item.get('ias')) < int(
+                        os.getenv("RECORD_VIDEO_LESS_THAN_DISTANCE")):
+                    print('Recording video')
+                    video.record(flight_video)
         else:
             print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
     elif response.status_code == 503:
