@@ -14,4 +14,4 @@ def run(clouds):
         }
         response = requests.post(os.getenv('RASPBERRY_PI_STATUS'), data=payload)
     except:
-        print('Server down | check request.', response.status_code)
+        print('Server down | wrong request or have no license.', response.status_code)

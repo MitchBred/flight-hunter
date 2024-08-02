@@ -1,4 +1,5 @@
 import math
+import os
 
 
 def haversine(lat1, lon1, lat2, lon2):
@@ -19,11 +20,11 @@ def calculate_time_to_location(current_lat, current_lon, destination_lat, destin
 
 
 def distance_in_minutes(airplane_lat, airplane_lon, airspeed_knots):
-    my_location = (float(airplane_lat), float(airplane_lon))  # Example location (New York)
+    my_location = (float(os.getenv("LAT")), float(os.getenv("LON")))
     airplane_position = (airplane_lat, airplane_lon)
     airspeed_knots = airspeed_knots
 
     time_to_my_location = calculate_time_to_location(airplane_position[0], airplane_position[1], my_location[0],
                                                      my_location[1], airspeed_knots)
 
-    return print(f"The airplane will reach your location in approximately {time_to_my_location:.2f} minutes.")
+    return round(time_to_my_location)
