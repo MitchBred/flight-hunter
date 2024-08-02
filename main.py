@@ -9,10 +9,11 @@ from shapely.geometry.polygon import Polygon
 from shapely.ops import transform
 import status
 import weather.api
-from calculations import kilometer_to_nautical_mile
+from calculations.nauticalmile import kilometer_to_nautical_mile
+from calculations.position_and_speed import distance_in_minutes
 
 # disable import for dev
-# from camera import video
+from camera import video
 
 load_dotenv(find_dotenv())  # load env
 
@@ -36,7 +37,6 @@ def check(lons_lats_vect):
     global flight_image, flight_video
     polygon = Polygon(lons_lats_vect)  # create polygon
     url = f"https://adsbexchange-com1.p.rapidapi.com/v2/lat/{os.getenv('LAT')}/lon/{os.getenv('LON')}/dist/{kilometer_to_nautical_mile()}/"
-    print(url)
     headers = {
         "X-RapidAPI-Key": os.getenv("X_RAPID_API_KEY"),
         "X-RapidAPI-Host": os.getenv("X_RAPID_API_HOST"),
@@ -47,37 +47,55 @@ def check(lons_lats_vect):
         flights = response.json()
         if flights['ac'] is not None:
             for item in flights['ac']:
-                if 'category' in item and (item['category'] is not None and item['category'] != "A0" and item['category'] != "A1"):
-                    point = Point(item['lon'], item['lat'])  # create point
-                    polygon_check = point.within(polygon)  # check if a point is in the polygon
-                    polygon_lower = str(polygon_check).lower()
+                # TODO: add if condition to ignore small flights
+                # Check if 'flight' key exists
+                if 'flight' not in item:
+                    print("Missing 'flight' key in item:", item)
+                    continue
 
-                    if polygon_check:
-                        flight_image = "false"
-                        # flight_video = "videos/preview.mp4"
-                        flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
+                print(item['flight'])
+                point = Point(item['lon'], item['lat'])  # create point
+                polygon_check = point.within(polygon)  # check if a point is in the polygon
+                polygon_lower = int(polygon_check)
 
-                        try:
-                            payload = {
-                                "in_polygon": polygon_lower,
-                                "lat": item["lat"],
-                                "lon": item["lon"],
-                                "flight": item["flight"],
-                                "image": flight_image,
-                                "video": flight_video,
-                            }
-                            print(payload)
-                            requests.post(os.getenv('PROJECT_URL'), data=payload)
-                        except:
-                            pass
+                if polygon_check:
+                    # check distance in minutes
+                    if item.get('ias'):
+                        distance_in_minutes(item['lat'], item['lon'], item.get('ias'))
 
-                    # video.record(flight_video)
+                    flight_image = "false"
+                    # flight_video = "videos/preview.mp4"
+                    flight_video = "videos/" + str(item["flight"]).lower().strip() + ".mp4"
+
+                    try:
+                        payload = {
+                            "flight": item["flight"],
+                            "category": item['category'],
+                            "distance_in_minutes": distance_in_minutes(item['lat'], item['lon'], item.get('ias')),
+                            "in_polygon": polygon_lower,
+                            "lat": item["lat"],
+                            "lon": item["lon"],
+                            "image": flight_image,
+                            "video": flight_video
+                        }
+                        print(payload)
+                        requests.post(os.getenv('PROJECT_URL'), data=payload)
+                    except:
+                        pass
+
+            # check distance_in_minutes is less than 5 minutes and greater than 0 minutes before recording
+            if distance_in_minutes(item['lat'], item['lon'], item.get('ias')) < int(os.getenv('RECORD_VIDEO_LESS_THAN_DISTANCE')) and distance_in_minutes(
+                    item['lat'], item['lon'], item.get('ias')) > 0:
+                print('Recording video')
+                video.record(flight_video)
         else:
             print(f'Flights | no flights in kilometer area of {os.getenv("KM_RADIUS")} KM.', response.status_code)
     elif response.status_code == 503:
         print('Server down | the RAPID server is down.', response.status_code)
+    elif response.status_code == 429:
+        print('Server down | to many requests', response.status_code)
     else:
-        print('Server down | check request.', response.status_code)
+        print('Server down | wrong request or have no license.', response.status_code)
 
 
 if __name__ == "__main__":
