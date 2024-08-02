@@ -11,7 +11,7 @@ def record(flightVideo):
     time.sleep(1)
 
     picam2 = Picamera2()
-    picam2.start_and_record_video(flight, duration=20)
+    picam2.start_and_record_video(flight, duration=30)
 
     upload_video(flight)
 

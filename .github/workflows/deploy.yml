@@ -9,10 +9,10 @@ jobs:
 
     steps:
       - name: Configure ownership settings to pi user
-        run: sudo chown -R $(id -u):$(id -g) ~/Desktop/actions-runner/_work/flight-hunter/flight-hunter
+        run: sudo chown -R $(id -u):$(id -g) ~/Desktop/flight-hunter
       - name: Check out the repository to the runner
         uses: actions/checkout@v4
       - name: Copy environment to directory
-        run: cp ~/Desktop/flight-hunter-env/.env .env
+        run: cp ~/Desktop/flight-hunter-env/.env ~/Desktop/flight-hunter/.env
       - name: Python Dependency Installation
         uses: py-actions/py-dependency-install@v4

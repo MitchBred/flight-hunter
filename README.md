@@ -77,7 +77,8 @@ To run this project, you will need to add the following environment variables to
 
 ## Run script automatically
 
-[TODO]Cronjob..
+- sudo crontab -e
+- `*/5 * * * * python3 /home/pi/Desktop/flight-hunter/main.py`
 
 ## Create self-hosted runner
 - Use Linux ARM64
