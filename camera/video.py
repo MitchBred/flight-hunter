@@ -1,6 +1,7 @@
 import os
 import time
 import boto3
+from picamera2 import Picamera2
 
 def record(flightVideo):
     flight = str(flightVideo).lower().strip()
